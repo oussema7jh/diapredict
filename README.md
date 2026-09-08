@@ -411,7 +411,9 @@ gh auth login
 
 ## License / Disclaimer
 
-Released for **educational and research** use. The software is provided “as
-is”, without warranty. **DiaPredict AI is not a medical diagnosis and must not
-be used to make medical decisions. Always consult a qualified healthcare
-professional for medical advice.**
+This project is released under the **MIT License** (see [`LICENSE`](LICENSE) —
+update the copyright holder with your name before publishing).
+
+The software is provided “as is”, without warranty. **DiaPredict AI is not a
+medical diagnosis and must not be used to make medical decisions. Always
+consult a qualified healthcare professional for medical advice.**
