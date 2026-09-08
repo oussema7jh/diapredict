@@ -297,7 +297,9 @@ diapredict/
 │   ├── train_all.py           # train everything
 │   ├── train_ml.py            # 3 ML models
 │   ├── train_dl.py            # PyTorch MLP + early stopping
-│   └── build_notebooks.py     # regenerate notebooks/
+│   ├── build_notebooks.py     # regenerate notebooks/
+│   └── publish_to_github.*    # create repo + push (sh / ps1)
+├── .github/workflows/ci.yml   # GitHub Actions CI (tests + frontend build)
 ├── notebooks/                 # 6 runnable Jupyter notebooks
 ├── training/
 │   └── evaluation.py          # metrics + meta.json persistence
@@ -344,6 +346,53 @@ diapredict/
   documented; nothing is hardcoded or hidden.
 - A qualified healthcare professional should always interpret any such model
   output.
+
+---
+
+## Publishing to GitHub
+
+The repository is already initialised on the `main` branch with a clean commit
+and a `.gitignore` that excludes all regenerable artifacts (models, datasets,
+SQLite DB, `node_modules`, build output). The source + notebooks + docs + a
+GitHub Actions CI workflow are tracked.
+
+To publish, run the bundled helper (it creates the repo, sets the `origin` and
+pushes `main`). Default name `diapredict`, default visibility `public`:
+
+**Windows (PowerShell):**
+```powershell
+# One-time auth (choose either):  GitHub CLI  or  Personal Access Token
+winget install GitHub.cli
+gh auth login
+
+.\scripts\publish_to_github.ps1                # diapredict / public
+.\scripts\publish_to_github.ps1 diapredict private
+```
+
+**macOS / Linux / Git Bash:**
+```bash
+brew install gh        # or install from https://cli.github.com
+gh auth login
+
+./scripts/publish_to_github.sh                 # diapredict / public
+./scripts/publish_to_github.sh diapredict private
+```
+
+**Manual (no CLI):**
+1. Create an empty repo on [github.com](https://github.com/new) named
+   `diapredict` (public).
+2. Generate a [personal access token](https://github.com/settings/tokens) with
+   the `repo` scope.
+3. Push:
+   ```bash
+   git remote add origin https://github.com/<YOUR_USERNAME>/diapredict.git
+   git push -u origin main
+   ```
+   (or, if using the token directly:
+   `git push -u https://<YOUR_TOKEN>@github.com/<YOUR_USERNAME>/diapredict.git main`)
+
+> Note: the automated CI on GitHub will download the dataset and train all
+> four models itself, so you don't need to commit the trained artifacts.
 
 ---
 
