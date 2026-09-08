@@ -1,0 +1,34 @@
+# DiaPredict AI — Python dependencies
+# Install with:  pip install -r requirements.txt
+
+# Data / numerical
+numpy==2.3.5
+pandas==2.2.3
+
+# Machine learning
+scikit-learn==1.6.1
+xgboost==3.4.1
+joblib==1.5.3
+
+# Deep learning (CPU build is sufficient for this project)
+# For GPU support, install the appropriate torch build from https://pytorch.org
+torch==2.14.0
+
+# Explainable AI
+shap==0.52.0
+
+# API / web framework
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+python-multipart==0.0.17
+pydantic==2.13.4
+
+# Testing
+pytest==9.0.3
+httpx==0.28.1
+
+# Notebook tooling
+matplotlib==3.10.9
+seaborn==0.13.2
+nbformat==5.10.4
+ipykernel==6.31.0

@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Models / data artifacts (regenerate with training scripts)
+models/ml/*
+models/dl/*
+models/meta.json
+models/dl_training_history.json
+data/diapredict.db
+data/raw/*.csv
+data/processed/*.npy
+data/processed/*.joblib
+data/processed/*.json
+
+# ! Keep the directories themselves
+!models/ml/.gitkeep
+!models/dl/.gitkeep
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Notebooks & jupyter
+.ipynb_checkpoints/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
