@@ -417,3 +417,21 @@ update the copyright holder with your name before publishing).
 The software is provided “as is”, without warranty. **DiaPredict AI is not a
 medical diagnosis and must not be used to make medical decisions. Always
 consult a qualified healthcare professional for medical advice.**
+
+## Database statistics checks
+
+Dashboard totals, average risk percent, and higher-risk counts are calculated
+across the entire assessment history in SQLite. The aggregate query does not
+load assessment feature or prediction JSON into Python and has no record limit.
+The existing response fields and two-decimal rounding are preserved.
+
+Run the focused regression tests without installing model dependencies:
+
+```bash
+python -m unittest discover -s tests -p test_database_stats.py -v
+```
+
+These tests cover an empty database, mixed categories and rounding, more than
+100,000 assessments, and aggregation without loading full records. The
+`Database tests` GitHub Actions workflow runs them on Windows and Linux with
+Python 3.10 and 3.13. These checks cover database statistics, not model accuracy.

@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import sqlite3
 import threading
+from contextlib import closing
 from datetime import datetime, timezone
 from typing import Any
 
@@ -111,21 +112,19 @@ class AssessmentStore:
         return out
 
     def stats(self) -> dict:
-        """Aggregate counts used by the dashboard."""
-        rows = self.recent(limit=100000)
-        total = len(rows)
-        if total == 0:
-            return {
-                "total_assessments": 0,
-                "avg_risk_percent": 0.0,
-                "higher_risk_count": 0,
-            }
-        avg = sum(r["risk_percent"] for r in rows) / total
-        higher = sum(1 for r in rows if r["risk_category"] == "Higher predicted risk")
+        """Aggregate the entire history in SQLite without loading assessment JSON."""
+        with closing(self._connect()) as conn:
+            row = conn.execute(
+                "SELECT COUNT(*) AS total, "
+                "COALESCE(AVG(risk_percent), 0.0) AS avg_risk, "
+                "COALESCE(SUM(CASE WHEN risk_category = ? THEN 1 ELSE 0 END), 0) AS higher "
+                "FROM assessments",
+                ("Higher predicted risk",),
+            ).fetchone()
         return {
-            "total_assessments": total,
-            "avg_risk_percent": round(avg, 2),
-            "higher_risk_count": higher,
+            "total_assessments": int(row["total"]),
+            "avg_risk_percent": round(float(row["avg_risk"]), 2),
+            "higher_risk_count": int(row["higher"]),
         }
 
 
